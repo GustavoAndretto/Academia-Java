@@ -1,18 +1,31 @@
-## Getting Started
+Entrada:
+Livro livro = new Livro(1928739, "Harry Potter e o Calice de Fogo", 2006, 1, 1);
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+biblioteca.atualizaLivro(1928739, "Harry Potter e a Ordem da Fenix", 2007, 1, 1);
 
-## Folder Structure
+Saída:
+316546479 Harry Potter e A Pedra Filosofal 2000 1 1
+1928739 Harry Potter e o Calice de Fogo 2006 1 1
+348976599 Harry Potter e O Prisioneiro de Azkaban 2004 1 2
+808028923 O Espadachim de Carvão 2013 3 2
+298345729 O Papai é Pop 2015 2 3
+347623486 Pior Que Ta Não Fica 2016 2 2
 
-The workspace contains two folders by default, where:
+[biblioteca.imprimeLivros() Após UPDATE]
+765687567 As Crónicas de Nárnia 2009 2 2
+129834798 Garota Desdobrável 2015 3 4
+1928739 Harry Potter e a Ordem da Fenix 2007 1 1
+316546479 Harry Potter e A Pedra Filosofal 2000 1 1
+348976599 Harry Potter e O Prisioneiro de Azkaban 2004 1 2
+808028923 O Espadachim de Carvão 2013 3 2
+298345729 O Papai é Pop 2015 2 3
+347623486 Pior Que Ta Não Fica 2016 2 2
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+[biblioteca.imprimeLivros() Após DELETE]
+765687567 As Crónicas de Nárnia 2009 2 2
+129834798 Garota Desdobrável 2015 3 4
+316546479 Harry Potter e A Pedra Filosofal 2000 1 1
+348976599 Harry Potter e O Prisioneiro de Azkaban 2004 1 2
+808028923 O Espadachim de Carvão 2013 3 2
+298345729 O Papai é Pop 2015 2 3
+347623486 Pior Que Ta Não Fica 2016 2 2

@@ -24,7 +24,7 @@ public class Main {
 
             
             // Atualiza o livro com o isbn 192839
-            biblioteca.atualizaLivro(192839, "Harry Potter e a Ordem da Fenix", 2007, 1, 1);
+            biblioteca.atualizaLivro(1928739, "Harry Potter e a Ordem da Fenix", 2007, 1, 1);
 
             // Imprime a lista de livros após o UPDATE
             System.out.println("[biblioteca.imprimeLivros() Após UPDATE]");
@@ -32,7 +32,7 @@ public class Main {
             System.out.println("");
 
             // DELETE
-            biblioteca.deletaLivro(192839);
+            biblioteca.deletaLivro(1928739);
 
             // Imprime a lista de livros após o DELETE
             System.out.println("[biblioteca.imprimeLivros() Após DELETE]");
