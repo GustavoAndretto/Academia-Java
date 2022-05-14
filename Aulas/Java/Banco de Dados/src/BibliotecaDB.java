@@ -1,5 +1,9 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import java.sql.SQLException;
 
+import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -8,8 +12,7 @@ import java.sql.PreparedStatement;
 public class BibliotecaDB {
     private Connection conn;
 
-    // Driver e Conexão e Driver
-    BibliotecaDB(String uri, String driver) throws SQLException, ClassNotFoundException {
+    BibliotecaDB(String uri, String driver) throws SQLException {
         try {
             Class.forName(driver);
 
@@ -19,63 +22,90 @@ public class BibliotecaDB {
             throw e;
         }
         catch (ClassNotFoundException e) {
-            throw new SQLException("SQL Exception: Não foi possível encontrar o driver " + driver);
+            throw new SQLException(e);
         }
     }
 
-    // CREATE(INSET)
-    boolean insereLivro(Livro livro) throws SQLException {
-        String query = String.format(
-            "INSERT INTO livro (`isbn`, `titulo`, `ano`, `Categoria_id`, `Editora_id`) " +
-            "VALUES (?, ?, ?, ?, ?)");
+    public boolean insereLivro(Livro livro) throws SQLException {
+        String query = "INSERT INTO `livro` (`isbn`, `titulo`, `ano`, `Categoria_id`, `Editora_id`) VALUES (?, ?, ?, ?, ?)";
 
         PreparedStatement pst = conn.prepareStatement(query);
-        pst.setInt(1, livro.isbn);
-        pst.setString(2, livro.titulo);
-        pst.setInt(3, livro.ano);
-        pst.setInt(4, livro.categoria);
-        pst.setInt(5, livro.editora);
+
+        // Se o Isbn de livro for 0, define o PK como null, a inserção utilizará o Auto Increment
+        if(livro.getIsbn() == 0) {
+            pst.setString(1, "null");
+        }
+        else {
+            pst.setInt(1, livro.getIsbn());
+        }
+
+        pst.setString(2, livro.getTitulo());
+        pst.setInt(3, livro.getAno());
+        pst.setInt(4, livro.getCategoria());
+        pst.setInt(5, livro.getEditora());
 
         return pst.execute();
     }
 
-    // READ(SELECT)
-    void imprimeLivros() throws SQLException {
-        String query = "SELECT * FROM livro ORDER BY titulo ASC";
+    //public List<Livro> listarLivros() throws SQLException {
+    //    return selectLivros("SELECT * FROM `livro` ORDER BY `titulo` ASC");
+    //}
+
+    //public List<Livro> listarLivrosEditora(Editora editora) throws SQLException {
+    //    return selectLivros("SELECT * FROM `livro` WHERE `editora.id`=? AND `editora.nome`=? ORDER BY `titulo` ASC");
+    //}
+
+    public List<Livro> listarLivrosCategoria(Categoria categoria) throws SQLException {
+        String query = "SELECT * FROM `livro`,`categoria` WHERE categoria.id=livro.Categoria_id AND categoria.nome=? ORDER BY `titulo` ASC";
+
+        List<Livro> livros = new ArrayList<Livro>();
         
-        ResultSet rs = conn.createStatement().executeQuery(query);
+        PreparedStatement pst = conn.prepareStatement(query);
+
+        pst.setString(1, categoria.getNome());
+
+        ResultSet rs = pst.executeQuery();
 
         while(rs.next()) {
             int isbn = rs.getInt("isbn");
             String titulo = rs.getString("titulo");
             int ano = rs.getInt("ano");
-            int categoria = rs.getInt("Categoria_id");
+            int cat = rs.getInt("Categoria_id");
             int editora = rs.getInt("Editora_id");
 
-            System.out.printf("%d %s %d %d %d\n", isbn, titulo, ano, categoria, editora);
+            livros.add(new Livro(isbn, titulo, ano, cat, editora));
         }
+
+        return livros;
     }
 
-    // UPDATE(UPDATE)
-    boolean atualizaLivro(int isbn, String titulo, int ano, int categoria, int editora) throws SQLException {
-        String query = String.format("UPDATE `livro` SET `titulo`=?, `ano`=?, `Categoria_id`=?, `Editora_id`=? WHERE `isbn`= ?");
+    public boolean atualizaLivro(Livro livro) throws SQLException {
+        String query = "UPDATE `livro` SET `titulo`=?, `ano`=?, `Categoria_id`=?, `Editora_id`=? WHERE `isbn`= ?";
 
         var pst = conn.prepareStatement(query);
-        pst.setString(1, titulo);
-        pst.setInt(2, ano);
-        pst.setInt(3, categoria);
-        pst.setInt(4, editora);
-        pst.setInt(5, isbn);
+        pst.setString(1, livro.getTitulo());
+        pst.setInt(2, livro.getAno());
+        pst.setInt(3, livro.getCategoria());
+        pst.setInt(4, livro.getEditora());
+        pst.setInt(5, livro.getIsbn());
 
         return pst.execute();
     }
 
-    // DELETE(DELETE)
-    boolean deletaLivro(int isbn) throws SQLException {
-        String query = String.format("DELETE FROM livro WHERE isbn=?");
+    public boolean deletaLivro(int isbn) throws SQLException {
+        String query = "DELETE FROM `livro` WHERE `isbn`=?";
 
         var pst = conn.prepareStatement(query);
         pst.setInt(1, isbn);
+
+        return pst.execute();
+    }
+
+    public boolean deletaLivro(String titulo) throws SQLException {
+        String query = "DELETE FROM `livro` WHERE `titulo`=?";
+
+        var pst = conn.prepareStatement(query);
+        pst.setString(1, titulo);
 
         return pst.execute();
     }
