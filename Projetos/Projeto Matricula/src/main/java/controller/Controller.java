@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Aluno;
 import model.DAO;
 
-@WebServlet(urlPatterns = {"/home", "/create", "/read", "/insert", "/getListAlunos"})
+@WebServlet(urlPatterns = {"/home", "/create", "/read", "/insert", "/alunos"})
 public class Controller extends HttpServlet {
 
     private DAO dao;
@@ -45,12 +45,12 @@ public class Controller extends HttpServlet {
             res.sendRedirect("cadastro.html");
         }
         else if(action.equals("/read")) {
-            res.sendRedirect("lista.html");
+            res.sendRedirect("alunos.html");
         }
         else if(action.equals("/insert")) {
             this.adicionarAluno(req, res);
         }
-        else if(action.equals("/getListAlunos")) {
+        else if(action.equals("/alunos")) {
             this.listarAlunos(req, res);
         }
     }
@@ -79,7 +79,6 @@ public class Controller extends HttpServlet {
 
     public void listarAlunos(HttpServletRequest req, HttpServletResponse res)
     throws ServletException, IOException {
-        //res.setContentType("text/html");
 
         List<Aluno> listaAlunos = new ArrayList<Aluno>();
 
@@ -105,7 +104,6 @@ public class Controller extends HttpServlet {
         json.put("alunos", jsonAlunos);
 
         PrintWriter out = res.getWriter();
-
         out.print(json.toString());
     }
 }

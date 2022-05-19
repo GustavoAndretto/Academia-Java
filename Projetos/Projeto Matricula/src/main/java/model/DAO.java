@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.SQLException;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class DAO {
-    private java.sql.Connection conn;
+    private Connection conn;
 
     public DAO(String uri, String driver) throws SQLException, ClassNotFoundException {
         try {

@@ -1,4 +1,4 @@
-import java.util.List;
+import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,29 +7,40 @@ public class Main {
                 "jdbc:mysql://localhost/biblioteca?user=root&password=Atos@2022", 
                 "com.mysql.cj.jdbc.Driver");
 
-            //try {
+            Livro livro = new Livro(1928739, "Harry Potter e o Calice de Fogo", 2006, 1, 1);
+
+            try {
                 // Insere o livro no banco de dados
-            //    biblioteca.insereLivro(new Livro(1928739, "Harry Potter e o Calice de Fogo", 2006, 1, 1));
-            //} catch (SQLException e) {
+                biblioteca.insereLivro(livro);
+            } catch (SQLException e) {
                 // Caso o livro já exista no banco de dados com a PK inserida, imprime na tela que o livro já existe
-            //    System.out.println("Falha ao inserir: Livro já existe no banco de dados com este isbn\n");
-            //}
-           
-            //biblioteca.atualizaLivro(new Livro(1928739, "Harry Potter e a Ordem da Fenix", 2007, 1, 1));
-            //biblioteca.deletaLivro(1928739);
+                System.out.println("Falha ao inserir: Livro já existe no banco de dados com este isbn\n");
+            }
 
-            var livros = biblioteca.listarLivrosCategoria(new Categoria(1, "Ficção Científica"));
+            // Imprime a lista de livros após o INSERT
+            System.out.println("[biblioteca.imprimeLivros() Após INSERT]");
+            biblioteca.imprimeLivros(); // Retorna a consulta: "SELECT * FROM livro"
+            System.out.println("");
 
-            imprimeLivros(livros);
+            
+            // Atualiza o livro com o isbn 192839
+            biblioteca.atualizaLivro(1928739, "Harry Potter e a Ordem da Fenix", 2007, 1, 1);
+
+            // Imprime a lista de livros após o UPDATE
+            System.out.println("[biblioteca.imprimeLivros() Após UPDATE]");
+            biblioteca.imprimeLivros();
+            System.out.println("");
+
+            // DELETE
+            biblioteca.deletaLivro(1928739);
+
+            // Imprime a lista de livros após o DELETE
+            System.out.println("[biblioteca.imprimeLivros() Após DELETE]");
+            biblioteca.imprimeLivros();
+            System.out.println("");
 
         } catch (Exception e) {
             System.out.println(e);
-        }
-    }
-
-    public static void imprimeLivros(List<Livro> livros) {
-        for(Livro livro : livros) {
-            System.out.printf("%d %s %d %d %d\n", livro.getIsbn(), livro.getTitulo(), livro.getAno(), livro.getCategoria(), livro.getEditora());
         }
     }
 }

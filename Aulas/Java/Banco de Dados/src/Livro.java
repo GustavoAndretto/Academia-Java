@@ -1,6 +1,9 @@
 public class Livro {
-    private int isbn, ano, categoria, editora;
-    private String titulo;
+    int isbn;
+    int ano;
+    int categoria;
+    int editora;
+    String titulo;
 
     Livro(int isbn, String titulo, int ano, int categoria, int editora) {
         this.isbn = isbn;
