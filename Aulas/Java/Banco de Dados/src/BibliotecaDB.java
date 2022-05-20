@@ -27,7 +27,7 @@ public class BibliotecaDB {
     boolean insereLivro(Livro livro) throws SQLException {
         String query = String.format(
             "INSERT INTO livro (`isbn`, `titulo`, `ano`, `Categoria_id`, `Editora_id`) " +
-            "VALUES (?, ?, ?, ?, ?)");
+            "VALUES (?, ?, ?, ?, ?) WHERE `isbn`= ?");
 
         PreparedStatement pst = conn.prepareStatement(query);
         pst.setInt(1, livro.isbn);
@@ -35,6 +35,7 @@ public class BibliotecaDB {
         pst.setInt(3, livro.ano);
         pst.setInt(4, livro.categoria);
         pst.setInt(5, livro.editora);
+        pst.setInt(6, livro.isbn);
 
         return pst.execute();
     }
