@@ -33,7 +33,7 @@ public class Log {
     }
 
     public void warning(String msg) {
-        logger.info(msg);
+        logger.warning(msg);
     }
 
     public void severe(String msg) {
