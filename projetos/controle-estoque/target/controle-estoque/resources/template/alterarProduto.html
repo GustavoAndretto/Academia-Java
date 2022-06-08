@@ -1,0 +1,33 @@
+<div class="container d-flex flex-column align-items-center">
+    <h1 class="fw-normal">Alterar Produto</h1>
+    <div class="w-50 mb-2" method="POST">
+        <div class="form-group mb-2">
+            <label>Código</label>
+            <div class="d-flex">
+                <input type="text" class="form-control" id="frmCodigo" name="frmCodigo">
+                <button type="button" class="btn btn-primary ms-2" onclick="botaoProcurar()"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+        <div class="form-group mb-2">
+        <label>Nome do produto</label>
+        <input type="text" class="form-control" id="frmNome" name="frmNome">
+        </div>
+        <div class="form-group mb-2">
+            <label>Categoria</label>
+            <input type="text" class="form-control" id="frmCategoria" name="frmCategoria">
+        </div>
+        <div class="form-group mb-2">
+            <label>Quantidade</label>
+            <input type="text" class="form-control" id="frmQuantidade" name="frmQuantidade">
+        </div>
+        <div class="form-group mb-2">
+            <label>Valor</label>
+            <input type="text" class="form-control" id="frmValor" name="frmValor">
+        </div>
+        <div class="mt-3">
+            <button type="button" class="btn btn-primary" onclick="executarAlteracao()">Alterar Produto</button>
+            <button type="button" class="btn btn-primary" onclick="limparFormulario()">Limpar</button>
+        </div>
+        <div id="alerta"></div>
+    </div>
+</div>

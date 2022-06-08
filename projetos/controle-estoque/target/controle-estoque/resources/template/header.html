@@ -1,0 +1,27 @@
+<nav class="navbar navbar-light navbar-expand-lg bg-light">
+    <div class="container d-flex flex-column justify-content-end">
+        <button type="button" class="btn btn-link navbar-brand d-flex justify-content-center align-items-center" onclick="carregarPagina(`home`)">
+            <i class="bi bi-box logo"></i>
+            <span>Controle de Estoque</span>
+        </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center" aria-labelledby="navbarDropdown">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" onclick="carregarPagina(`home`)">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="carregarPagina(`inserirProduto`)">Inserir Produto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="carregarPagina(`alterarProduto`)">Alterar Produto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="carregarPagina(`listarProdutos`)">Listar Produtos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

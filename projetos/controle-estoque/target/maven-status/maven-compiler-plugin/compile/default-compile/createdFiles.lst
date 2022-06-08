@@ -1,0 +1,3 @@
+com\estoque\controller\ProdutoREST.class
+com\estoque\model\Produto.class
+com\estoque\model\ProdutoDAO.class

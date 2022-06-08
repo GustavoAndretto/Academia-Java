@@ -1,0 +1,17 @@
+.logo {
+    margin: 0 3px;
+    font-size: 2rem;
+    background: linear-gradient(to right, #42047E 0%, #07F49E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo:hover {
+    transform: rotate(-10deg);
+    transition: .2s ease-in-out transform;
+}
+
+.btn-animation:hover {
+    transform: scale(1.1);
+    transition: .2s ease-in-out transform;  
+}
