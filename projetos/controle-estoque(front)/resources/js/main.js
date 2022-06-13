@@ -3,9 +3,10 @@ const requestOrigin = 'http://127.0.0.1:8080/produto';
 new Vue({
     el: '#app',
     vuetify: new Vuetify(),
-    data: {
+    data: {  
         drawer: false,
         dialog: false,
+        about: false,
         form: false,
         dialogDelete: false,
         snackbar: {
@@ -14,7 +15,8 @@ new Vue({
             timeout: 4000
         },
         select: {
-            category: ['Eletrodoméstico',
+            category: [
+                'Eletrodoméstico',
                 'Informática',
                 'Móveis e Decoração',
                 'Eletroportáteis',
@@ -22,7 +24,8 @@ new Vue({
                 'Esporte',
                 'Automotivo',
                 'Papelaria',
-                'Outros']
+                'Outros'
+            ]
         },
         rule: {
             name: [
@@ -96,8 +99,6 @@ new Vue({
 
     methods: {
         initialize() {
-            // TODO: fetch data from REST server
-            //http://127.0.0.1:8080/produto
         },
 
         loadProducts() {
@@ -133,6 +134,7 @@ new Vue({
                 }
                 else {
                     this.snackbarMessage('Ocorreu um erro ao inserir o produto');
+                    console.log(data['error']);
                 }
             });
         },
@@ -149,7 +151,8 @@ new Vue({
                     this.loadProducts();
                 }
                 else {
-                    this.snackbarMessage('Ocorreu um erro ao alterar o produto, verifique o log de erros para mais detalhes');
+                    this.snackbarMessage('Ocorreu um erro ao alterar o produto, verifique o console para mais detalhes');
+                    console.log(data['error']);
                 }
             });
         },
@@ -167,6 +170,7 @@ new Vue({
                 }
                 else {
                     this.snackbarMessage('Ocorreu um erro ao excluir o produto');
+                    console.log(data['error']);
                 }
             });
         },

@@ -31,7 +31,7 @@ public class ProdutoDAO {
     public Long inserir(Produto produto) throws Exception {
         try {
             em.getTransaction().begin();
-
+            
             em.persist(produto);
 
             em.getTransaction().commit();

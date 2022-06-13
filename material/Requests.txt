@@ -1,0 +1,4 @@
+GET	/produto/listar
+POST	/produto/novo
+PUT	/produto/atualizar
+DELETE	/produto/excluir

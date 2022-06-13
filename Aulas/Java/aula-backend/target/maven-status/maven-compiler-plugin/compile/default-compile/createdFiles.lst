@@ -1,0 +1,3 @@
+com\coco\model\Produto.class
+com\coco\controller\ProdutoServlet.class
+com\coco\model\ProdutoDAO.class
