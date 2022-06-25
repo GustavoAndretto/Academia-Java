@@ -1,0 +1,29 @@
+
+.container {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 30px auto;
+    background-color: blue;
+    width: 400px;
+    height: 300px;
+    border-radius: 25px;
+}
+
+.elemento {
+    text-align: center;
+    color: black;
+    background-color: red;
+    height: 50px;
+    line-height: 50px;
+    width: 70px;
+}
+
+.elemento:first-child {
+    border-radius: 0 0 25px 0;
+}
+
+.elemento:last-child {
+    border-radius: 0 25px 0 0;
+}

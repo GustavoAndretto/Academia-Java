@@ -10,12 +10,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-
-
 public class ProdutoDAO {
     private static final EntityManagerFactory emf;
     private EntityManager em;
-    
+
     static {
         try {
             emf = Persistence.createEntityManagerFactory("default");
@@ -31,15 +29,19 @@ public class ProdutoDAO {
     public Long inserir(Produto produto) throws Exception {
         try {
             em.getTransaction().begin();
-            
-            em.persist(produto);
+
+            if (produto.getCodigo() > 0) {
+                em.persist(produto);
+            } else {
+                throw new Exception("'codigo' cannot be 0.");
+            }
 
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e;
         }
-        
+
         return produto.getCodigo();
     }
 
@@ -52,7 +54,7 @@ public class ProdutoDAO {
         return allQuery.getResultList();
     }
 
-    public void atualizar(Produto produto) throws Exception {  
+    public void atualizar(Produto produto) throws Exception {
         try {
             em.getTransaction().begin();
 
@@ -63,11 +65,11 @@ public class ProdutoDAO {
             prod.setNome(produto.getNome());
             prod.setValor(produto.getValor());
 
-            em.getTransaction().commit(); 
+            em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e;
-        }      
+        }
     }
 
     public void remover(Produto produto) throws Exception {
@@ -78,10 +80,10 @@ public class ProdutoDAO {
 
             em.remove(prod);
 
-            em.getTransaction().commit(); 
+            em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw e;
-        } 
+        }
     }
 }

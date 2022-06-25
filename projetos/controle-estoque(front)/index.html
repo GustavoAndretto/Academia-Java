@@ -34,7 +34,7 @@
                         </v-btn>
                     </template>
                     <v-list>
-                        <v-list-item href="#" @click="about = true">
+                        <v-list-item href="#" @click="about.visible = true">
                             Sobre
                         </v-list-item>
                     </v-list>
@@ -71,7 +71,9 @@
                     </v-breadcrumbs>
                     <v-data-table :headers="table.headers" :items="products" :page.sync="table.pageIndex"
                         :items-per-page="table.itemsPerPage" :search="search" sort-by="code"
-                        @page-count="table.pageCount = $event" class="elevation-1" hide-default-footer>
+                        @page-count="table.pageCount = $event" class="elevation-1" :loading="noDataLoaded"
+                        loading-text="Carregando produtos..." no-data-text="Nenhum produto cadastrado."
+                        no-results-text="Nenhum resultado encontrado" hide-default-footer>
                         <template v-slot:top>
                             <v-toolbar flat>
                                 <v-toolbar-title>{{table.title}}</v-toolbar-title>
@@ -96,7 +98,9 @@
                                                     <v-row>
                                                         <v-col cols="4" sm="12" md="3">
                                                             <v-text-field type="number" v-model.number="editedItem.code"
-                                                                label="Código" disabled hide-spin-buttons>
+                                                                label="Código" :rules="rule.code"
+                                                                :disabled="formTitle == 'Alterar Produto'"
+                                                                hide-spin-buttons>
                                                             </v-text-field>
                                                         </v-col>
                                                         <v-col cols="8" sm="12" md="9">
@@ -127,6 +131,7 @@
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
+                                            <v-divider></v-divider>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
                                                 <v-btn color="blue darken-1" text @click="reset()">
@@ -166,28 +171,28 @@
                             </v-icon>
                         </template>
                     </v-data-table>
-                    <v-container class="text-center pt-2">
+                    <v-container v-if="products.length" class="text-center pt-2">
                         <v-pagination v-model="table.pageIndex" :length="table.pageCount"></v-pagination>
                     </v-container>
                 </v-container>
-                <v-dialog v-model="about" width="600">
+                <v-dialog v-model="about.visible" width="600">
                     <v-card>
                         <v-card-title class="text-h5 grey lighten-2">
-                            Sobre
+                            {{about.title}}
                         </v-card-title>
                         <v-card-title>
                             Objetivo
                         </v-card-title>
                         <v-card-text class="pb-0 text-justify">
-                            Este projeto tem por objetivo revisar e avaliar os conhecimentos absorvidos
-                            até o momento atual do curso de Java Web e também servir como motivação para o
-                            projeto final do curso.
+                            {{about.goal}}
                         </v-card-text>
                         <v-card-title>Professores</v-card-title>
                         <v-card-text class="pb-0">
                             <ul>
-                                <li>Herysson Figueiredo</li>
-                                <li><a href="https://github.com/lschlestein">Lucas Schlestein</a></li>
+                                <li v-for="teacher in about.teachers">
+                                    <a :href="teacher.href" rel="noopener noreferrer"
+                                        target="_blank">{{teacher.name}}</a>
+                                </li>
                             </ul>
                         </v-card-text>
                         <v-card-title>
@@ -195,33 +200,28 @@
                         </v-card-title>
                         <v-card-text class="pb-0">
                             <ul>
-                                <li><a href="https://javaee.github.io/servlet-spec/">Java Servlet</a></li>
-                                <li><a href="https://tomcat.apache.org/">Apache Tomcat</a></li>
-                                <li><a href="https://maven.apache.org/">Apache Maven</a></li>
-                                <li><a href="https://www.eclipse.org/eclipselink/">Eclipse Persistence</a></li>
-                                <li><a href="https://github.com/google/gson">Google GSON</a></li>
-                                <li><a href="https://www.json.org/json-en.html">JSON</a></li>
-                                <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API">Fetch API</a>
+                                <li v-for="tech in about.techs">
+                                    <a :href="tech.href" rel="noopener noreferrer" target="_blank">{{tech.name}}</a>
                                 </li>
-                                <li><a href="https://vuejs.org/">Vue.js</a></li>
-                                <li><a href="https://material.io/design">Material Design</a></li>
-                                <li><a href="https://vuetifyjs.com/en/">Vuetify</a></li>
                             </ul>
                         </v-card-text>
                         <v-card-title>Desenvolvedores</v-card-title>
                         <v-card-text>
                             <ul>
-                                <li><a href="https://github.com/gustavoandretto">Gustavo Andretto</a></li>
+                                <li v-for="dev in about.devs">
+                                    <a :href="dev.href" rel="noopener noreferrer" target="_blank">{{dev.name}}</a>
+                                </li>
                             </ul>
                         </v-card-text>
                         <v-divider></v-divider>
                         <v-card-actions>
                             <div class="text-center">Academia Java 2022 -
-                                <a href="https://atos.net/pt-br/brasil-atos">Atos</a> &
-                                <a href="https://www.ufn.edu.br">UFN</a>
-                            </div>         
+                                <a target="_blank" rel="noopener noreferrer"
+                                    href="https://atos.net/pt-br/brasil-atos">Atos</a> &
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.ufn.edu.br">UFN</a>
+                            </div>
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" text @click="about=false">Fechar</v-btn>
+                            <v-btn color="primary" text @click="about.visible=false">Fechar</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
